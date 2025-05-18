@@ -1,0 +1,39 @@
+Table brand {
+  id integer [primary key]
+  name varchar
+  website varchar
+  lgbt boolean
+}
+
+Table size {
+  id integer [primary key]
+  code varchar
+  id_range_min integer [not null]
+  id_range_max integer [not null]
+  id_brand integer [not null]
+}
+
+Ref: size.id_range_min > measurement.id
+Ref: size.id_range_max > measurement.id
+Ref: size.id_brand > brand.id
+
+Table user {
+  id integer [primary key]
+  username varchar
+  email varchar
+  password varchar
+  id_measurement integer [not null]
+}
+
+Ref: user.id_measurement > measurement.id
+
+Table measurement {
+  id integer [primary key]
+  waist decimal(12,2)
+  hip decimal(12,2)
+  chest decimal(12,2)
+  underchest decimal(12,2)
+  shoulder decimal(12,2)
+  arm decimal(12,2)
+  leg decimal(12,2)
+}
