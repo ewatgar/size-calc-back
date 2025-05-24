@@ -1,0 +1,83 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table brand {
+  id integer [primary key]
+  name varchar
+  website varchar
+  trans_specific boolean
+}
+
+Table size {
+  id integer [primary key]
+  id_range_min integer [not null]
+  id_range_max integer [not null]
+  id_brand integer [not null]
+  clothes_gender clothes_gender
+  clothes_category clothes_category
+}
+
+Ref: size.id_range_min > measurement.id
+Ref: size.id_range_max > measurement.id
+Ref: size.id_brand > brand.id
+
+Table code {
+  id_size integer [primary key]
+  code varchar [primary key]
+}
+
+Ref: code.id_size > size.id
+
+Table user {
+  id integer [primary key]
+  id_measurement integer [not null]
+  username varchar
+  email varchar
+  password varchar
+  admin boolean
+}
+
+Ref: user.id_measurement > measurement.id
+
+// ALWAYS IN CM => INCHES CALCULATED ONLY IN FRONTEND
+Table measurement {
+  id integer [primary key]
+  // general
+  height decimal(12,2)
+  // top
+  head decimal(12,2)
+  neck decimal(12,2)
+  shoulder decimal(12,2)//back between shoulders
+  chest decimal(12,2) //bust
+  underchest decimal(12,2)
+  sleeve decimal(12,2) //neck to wrist (arm)
+  // bottom
+  hip decimal(12,2)
+  waist decimal(12,2)
+  inseam decimal(12,2) //inside leg
+  foot decimal(12,2)
+}
+
+Enum clothes_gender {
+  unisex
+  feminine
+  masculine
+}
+
+Enum clothes_category {
+  // top
+  shirt
+  tshirt
+  jacket
+  // bottom
+  pants
+  jeans
+  skirt
+  shoes
+  // underwear/swimwear
+  bra
+  binder
+  briefs
+  boxers
+  panties
+}
