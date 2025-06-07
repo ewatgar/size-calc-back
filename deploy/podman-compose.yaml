@@ -1,0 +1,17 @@
+name: size-calc
+
+services:
+  db:
+    container_name: db
+    image: docker.io/postgres:latest
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  db:
